@@ -1,6 +1,5 @@
 +++
 title = "Contact Calligraphy"
-layout = "page"
 +++
 
 If you have an issue or question regarding the theme, please visit the

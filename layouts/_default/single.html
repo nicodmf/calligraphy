@@ -1,25 +1,8 @@
 {{- define "main" }}
-<article class="l-container_content card">
-  {{ partialCached "entry/header" . .Page }}
-  <section class="card-content">
-    {{ partialCached "function/content.html" . .Page }}
-  </section>
-  {{- if .Params.tags }}
-  	{{ $tags := sort .Params.tags }}
-  	{{ $variant := printf "%x" $tags }}
-  	{{ partialCached "entry/footer.html" . $variant }}
-  {{- end }}
+<article class="card card--page{{ if not .Params.feature }} card--coverless{{ end }}">
+    <div class="card__content">
+        <h1 class="card__title">{{ .Title }}</h1>
+        {{ partialCached "function/content" . .Page }}
+    </div>
 </article>
-{{- end }}
-
-{{- define "aside-left" }}
-{{- if .Params.authors}}{{ partialCached "aside/authors" . .Params.authors }}{{- end }}
-{{- end }}
-
-{{- define "aside-right" }}
-  {{ partial "aside/toc" . }}
-{{- end }}
-
-{{- define "pagination" }}
-  {{ partial "pagination" . }}
 {{- end }}

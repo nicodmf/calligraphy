@@ -28,8 +28,8 @@
     {{- if not (in .Destination "http") }}
       {{- with .Page.Resources.GetMatch .Destination }}
         {{- $image = . }}
-        {{- if gt $image.Width 700 }}
-          {{- $thumbnail = ($image.Resize "700x").RelPermalink -}}
+        {{- if gt $image.Width 900 }}
+          {{- $thumbnail = ($image.Resize "900x").RelPermalink -}}
         {{- end }}
       {{- else }}
         {{- $image = .Destination }}

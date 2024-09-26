@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Language }}" data-theme="light">
+<html lang="{{ .Site.Language }}" data-dark-mode="off" data-animations="on">
 
 <head>
   <meta charset="utf-8">
@@ -12,8 +12,7 @@
   {{ hugo.Generator }}
   <meta name="robots" content="{{ cond hugo.IsProduction "index, follow" "noindex, nofollow"}}">
 
-  {{ partialCached "site/styles-libraries.html" . }}
-  {{ partialCached "site/styles-main.html" . }}
+  {{ partialCached "site/styles.html" . }}
 
   {{- if .Site.Params.meta.faviconComplete }}
   {{- $version := print "?v=" .Site.Params.meta.faviconVersion | default "" }}
@@ -36,7 +35,7 @@
   {{- end }}
 
   {{- with (.Params.keywords | default .Params.tags | default .Site.Params.keywords) }}<meta name="keywords" content="{{ delimit . ", " }}">{{- end }}
-  {{- with .Params.Authors }}<meta name="author" content="{{ delimit . ", " }}">{{- end }}
+  {{- with .Params.authors }}<meta name="author" content="{{ delimit . ", " }}">{{- end }}
   <meta name="og:title" content="{{ .Title | default .Site.Title }}">
   <meta name="og:description" content="{{ $description }}">
   <meta name="og:type" content="{{ cond .IsHome "website" "article" }}">
@@ -61,38 +60,44 @@
 <body>
 
   <script type="text/javascript">
-    // identify prefered theme and load here to prevent flicker
-    function detectTheme() {
-      var theme = "light";
 
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        var theme = "dark";
+    // detect user preferences here to prevent flickers
+    function detectPreferences() {
+
+      // detect dark mode preference
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches && !(localStorage.getItem("dark-mode") === "off") ) {
+        document.documentElement.setAttribute("data-dark-mode", "on");
+        localStorage.setItem("dark-mode", "on");
+      } else {
+        document.documentElement.setAttribute("data-dark-mode", "off");
+        localStorage.setItem("dark-mode", "off");
       }
-
-      if (localStorage.getItem("theme")) {
-        var theme = localStorage.getItem("theme");
-      }
-
-      if (theme == "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
+      
+      // detect reduced motion preference
+      if (window.matchMedia("(preferes-reduced-animations)").matches && !localStorage.getItem("animations") === "on") {
+        document.documentElement.setAttribute("data-animations", "off");
+        localStorage.setItem("animations", "off");
+      } else {
+        document.documentElement.setAttribute("data-animations", "on");
+        localStorage.setItem("animations", "on");
       }
     }
 
-    detectTheme();
+    detectPreferences();
+
   </script>
 
   {{ block "header" . }}
     {{ partial "site/header.html" . }}
   {{ end }}
 
-  <main id="site-main" role="main">
-
+  <main id="site-main" class="site__main l-grid" role="main">
     {{ block "main" . }}{{ end }}
-    {{ block "aside-left" . }}{{ end }}
-    {{ block "aside-right" . }}{{ end }}
+    {{ block "sidebar-left" . }}{{ end }}
+    {{ block "sidebar-right" . }}{{ end }}
     {{ block "pagination" . }}{{ end }}
   </main>
-
+  
   {{ block "footer" . }}{{ partialCached "site/footer.html" . }}{{ end }}
 
 </body>
