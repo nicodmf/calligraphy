@@ -1,6 +1,6 @@
 {{- define "main" }}
 <article class="card card--page">
-    {{- $authorPage := site.GetPage "authors" (urlize .Title) }} {{- $image := (partial "function/author-image" (dict "author" .Title "size" "1200x1200 center")) }}
+    {{- $image := (partial "function/author-image" (dict "author" .Path "size" "1200x1200 center")) }}
     <figure class="card__cover card__cover--headshot">
         <img src="{{ $image.thumbnail }}" alt="{{ .Title }}'s Headshot" height="500">
     </figure>

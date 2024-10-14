@@ -1,8 +1,7 @@
 {{- define "main" }}
   {{- range .Paginator.Pages }}
 <article class="card">
-    {{- $authorPage := site.GetPage "authors" (urlize .Title) }}
-    {{- $image := (partial "function/author-image" (dict "author" .Title "size" "500x500 center")) }} 
+    {{- $image := (partial "function/author-image" (dict "author" .Path "size" "1200x1200 center")) }} 
     <figure class="card__cover">
         <a href="{{ .Permalink }}"><img src="{{ $image.thumbnail }}" alt="{{ .Title }}'s Headshot" height="500px"></a>
     </figure>
