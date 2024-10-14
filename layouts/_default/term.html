@@ -18,7 +18,7 @@
     {{- end }}
     <div class="card__content">
         <div class="card__header">
-            {{ with .Params.series }}<a href="/series/{{ . | urlize }}" class="card__series" data-taxonomy="{{ print "series-" . | urlize }}">{{ . }}</a>{{ end }}
+            {{ partial "series-link.html" .Params.series }}
             <h2 class="card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
             {{ with .Params.subtitle }} <span class="card__subtitle">{{ . }}</span>{{ end }}
             <div class="card__meta">

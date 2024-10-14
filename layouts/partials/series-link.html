@@ -1,0 +1,3 @@
+{{ $seriePage := site.GetPage "taxonomyTerm" (printf "series/%s" . | urlize) }}
+<a href="{{ $seriePage.RelPermalink }}" class="card__series" data-taxonomy="{{ print " series-" . |
+  urlize }}">{{ $seriePage.Title }}</a>
