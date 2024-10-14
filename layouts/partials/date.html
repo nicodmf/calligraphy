@@ -1,0 +1,7 @@
+<time datetime="{{ . }}" class="card__date">
+  {{if (eq (.Format "2006") (now.Format "2006")) }}
+    {{(. |time.Format "1 Jan")}}
+  {{else}}
+    {{(. |time.Format ":date_medium")}}
+  {{end}}
+</time>
